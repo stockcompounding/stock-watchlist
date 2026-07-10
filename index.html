@@ -1,0 +1,490 @@
+<style>
+  :root {
+    --ground: #F6F7F9;
+    --surface: #FFFFFF;
+    --surface-2: #EEF1F5;
+    --surface-3: #F6F8FB;
+    --ink: #14171C;
+    --ink-muted: #59626F;
+    --ink-faint: #8B94A1;
+    --hair: #E3E7EC;
+    --hair-strong: #D3D9E0;
+    --accent: #2D5BD0;
+    --accent-ink: #2D5BD0;
+    --accent-soft: rgba(45, 91, 208, 0.10);
+    --pos: #0E875B;
+    --pos-soft: rgba(14, 135, 91, 0.10);
+    --neg: #CB4137;
+    --neg-soft: rgba(203, 65, 55, 0.10);
+    --hold: #7A6410;
+    --hold-soft: rgba(160, 130, 20, 0.12);
+    --shadow: 0 1px 2px rgba(20, 23, 28, 0.04), 0 6px 20px rgba(20, 23, 28, 0.05);
+    --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-num: "SF Mono", "JetBrains Mono", "Cascadia Code", ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0E1116;
+      --surface: #151A21;
+      --surface-2: #1D2531;
+      --surface-3: #12161C;
+      --ink: #E9EDF3;
+      --ink-muted: #98A2B2;
+      --ink-faint: #69727F;
+      --hair: #252D38;
+      --hair-strong: #313A47;
+      --accent: #6E93FF;
+      --accent-ink: #9DB6FF;
+      --accent-soft: rgba(110, 147, 255, 0.14);
+      --pos: #34C88C;
+      --pos-soft: rgba(52, 200, 140, 0.13);
+      --neg: #F0776A;
+      --neg-soft: rgba(240, 119, 106, 0.14);
+      --hold: #D6A54A;
+      --hold-soft: rgba(214, 165, 74, 0.15);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px rgba(0, 0, 0, 0.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #F6F7F9; --surface: #FFFFFF; --surface-2: #EEF1F5; --surface-3: #F6F8FB;
+    --ink: #14171C; --ink-muted: #59626F; --ink-faint: #8B94A1; --hair: #E3E7EC; --hair-strong: #D3D9E0;
+    --accent: #2D5BD0; --accent-ink: #2D5BD0; --accent-soft: rgba(45,91,208,0.10);
+    --pos: #0E875B; --pos-soft: rgba(14,135,91,0.10); --neg: #CB4137; --neg-soft: rgba(203,65,55,0.10);
+    --hold: #7A6410; --hold-soft: rgba(160,130,20,0.12);
+    --shadow: 0 1px 2px rgba(20,23,28,0.04), 0 6px 20px rgba(20,23,28,0.05);
+  }
+  :root[data-theme="dark"] {
+    --ground: #0E1116; --surface: #151A21; --surface-2: #1D2531; --surface-3: #12161C;
+    --ink: #E9EDF3; --ink-muted: #98A2B2; --ink-faint: #69727F; --hair: #252D38; --hair-strong: #313A47;
+    --accent: #6E93FF; --accent-ink: #9DB6FF; --accent-soft: rgba(110,147,255,0.14);
+    --pos: #34C88C; --pos-soft: rgba(52,200,140,0.13); --neg: #F0776A; --neg-soft: rgba(240,119,106,0.14);
+    --hold: #D6A54A; --hold-soft: rgba(214,165,74,0.15);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 28px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .app {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    min-height: 100vh;
+    padding: 22px clamp(12px, 3vw, 34px) 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .masthead {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px;
+    padding-bottom: 16px; margin-bottom: 18px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .brand { display: flex; align-items: baseline; gap: 11px; }
+  .brand .mark {
+    font-weight: 800; font-size: 21px; letter-spacing: -0.02em; color: var(--ink);
+  }
+  .brand .mark .dot { color: var(--accent-ink); }
+  .brand .sub {
+    font-size: 12px; color: var(--ink-faint); letter-spacing: 0.04em;
+    text-transform: uppercase; font-weight: 600;
+  }
+  .asof { margin-left: auto; font-size: 12px; color: var(--ink-muted); text-align: right; line-height: 1.5; }
+  .asof b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  /* Summary chips */
+  .summary { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .chip {
+    display: flex; flex-direction: column; gap: 2px;
+    background: var(--surface); border: 1px solid var(--hair); border-radius: 11px;
+    padding: 9px 13px; min-width: 92px; box-shadow: var(--shadow);
+  }
+  .chip .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); font-weight: 600; }
+  .chip .v { font-size: 17px; font-weight: 700; font-family: var(--font-num); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .chip .v.pos { color: var(--pos); } .chip .v.neg { color: var(--neg); }
+
+  /* Toolbar */
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+  .search {
+    flex: 1 1 200px; max-width: 320px; position: relative;
+  }
+  .search input {
+    width: 100%; font-family: var(--font-ui); font-size: 13.5px; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--hair-strong); border-radius: 9px;
+    padding: 9px 12px 9px 32px; outline: none; transition: border-color .15s, box-shadow .15s;
+  }
+  .search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .search svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--ink-faint); }
+  .segmented { display: inline-flex; background: var(--surface-2); border-radius: 9px; padding: 3px; gap: 2px; }
+  .segmented button {
+    font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--ink-muted);
+    background: transparent; border: none; border-radius: 7px; padding: 6px 12px; cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .segmented button:hover { color: var(--ink); }
+  .segmented button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+  .segmented button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* Table */
+  .tablewrap {
+    overflow-x: auto; background: var(--surface); border: 1px solid var(--hair);
+    border-radius: 14px; box-shadow: var(--shadow);
+  }
+  table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 940px; }
+  thead th {
+    position: sticky; top: 0; z-index: 3; background: var(--surface-2);
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.045em;
+    color: var(--ink-muted); text-align: right; padding: 11px 14px; white-space: nowrap;
+    cursor: pointer; user-select: none; border-bottom: 1px solid var(--hair-strong);
+  }
+  thead th:first-child { text-align: left; left: 0; z-index: 4; }
+  thead th .arrow { font-size: 9px; margin-left: 3px; opacity: 0; transition: opacity .15s; }
+  thead th[data-active="true"] { color: var(--ink); }
+  thead th[data-active="true"] .arrow { opacity: 1; color: var(--accent-ink); }
+  thead th:hover { color: var(--ink); }
+  thead th:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  tbody td {
+    padding: 0 14px; height: 46px; text-align: right; white-space: nowrap;
+    font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: 13px;
+    color: var(--ink); border-bottom: 1px solid var(--hair);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--surface-3); }
+  td.tkr {
+    position: sticky; left: 0; z-index: 2; text-align: left; background: var(--surface);
+    border-right: 1px solid var(--hair);
+  }
+  tbody tr:hover td.tkr { background: var(--surface-3); }
+  .tkr .row { display: flex; flex-direction: column; gap: 1px; }
+  .tkr .sym { font-family: var(--font-ui); font-weight: 700; font-size: 13.5px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 6px; }
+  .tkr .nm { font-family: var(--font-ui); font-size: 11px; color: var(--ink-faint); font-weight: 500; max-width: 158px; overflow: hidden; text-overflow: ellipsis; }
+  .tag { font-family: var(--font-ui); font-size: 9px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 1px 5px; border-radius: 5px; background: var(--surface-2); color: var(--ink-faint); }
+
+  .num-strong { font-weight: 600; }
+  .pos { color: var(--pos); } .neg { color: var(--neg); } .flat { color: var(--ink-faint); }
+  .change { display: inline-flex; align-items: center; gap: 3px; justify-content: flex-end; }
+  .na { color: var(--ink-faint); }
+
+  /* Rating pill */
+  .rating { display: inline-flex; align-items: center; gap: 6px; justify-content: flex-end; font-family: var(--font-ui); }
+  .pill { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; letter-spacing: 0.01em; }
+  .pill.buy2 { background: var(--pos-soft); color: var(--pos); }
+  .pill.buy1 { background: var(--pos-soft); color: var(--pos); }
+  .pill.hold { background: var(--hold-soft); color: var(--hold); }
+  .pill.sell { background: var(--neg-soft); color: var(--neg); }
+  .rating .cnt { font-family: var(--font-num); font-size: 10.5px; color: var(--ink-faint); }
+
+  /* 52wk bar */
+  .range { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+  .range .track { position: relative; width: 74px; height: 5px; border-radius: 3px; background: var(--surface-2); overflow: visible; }
+  .range .fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent-soft), var(--accent)); opacity: .55; }
+  .range .dot { position: absolute; top: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--surface); }
+  .range .pct { font-size: 10.5px; color: var(--ink-faint); width: 30px; text-align: right; }
+
+  .legend { margin-top: 16px; font-size: 11.5px; color: var(--ink-muted); line-height: 1.7; }
+  .legend .k { display: inline-flex; align-items: center; gap: 5px; margin-right: 16px; }
+  .legend b { color: var(--ink); font-weight: 600; }
+  .legend .em { font-family: var(--font-num); color: var(--ink-faint); }
+  .footnote { margin-top: 10px; font-size: 11px; color: var(--ink-faint); line-height: 1.6; }
+  .footnote a { color: var(--accent-ink); text-decoration: none; }
+  .footnote a:hover { text-decoration: underline; }
+  .empty { padding: 40px; text-align: center; color: var(--ink-faint); font-family: var(--font-ui); font-size: 13px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 560px) {
+    .asof { margin-left: 0; text-align: left; width: 100%; }
+    .chip { min-width: 78px; flex: 1 1 auto; }
+  }
+</style>
+
+<div class="app">
+  <header class="masthead">
+    <div class="brand">
+      <span class="mark">Watchlist<span class="dot">.</span></span>
+      <span class="sub">Valuation Screener</span>
+    </div>
+    <div class="asof" id="asof"></div>
+  </header>
+
+  <section class="summary" id="summary"></section>
+
+  <div class="toolbar">
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      <input id="search" type="text" placeholder="Filter ticker or name&hellip;" autocomplete="off" spellcheck="false" aria-label="Filter by ticker or name">
+    </div>
+    <div class="segmented" id="typefilter" role="group" aria-label="Filter by asset type">
+      <button data-type="all" aria-pressed="true">All</button>
+      <button data-type="stock" aria-pressed="false">Stocks</button>
+      <button data-type="etf" aria-pressed="false">ETFs</button>
+      <button data-type="crypto" aria-pressed="false">Crypto</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table id="tbl">
+      <thead><tr id="headrow"></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <div class="legend" id="legend">
+    <span class="k"><span class="pill buy1" style="padding:1px 7px;">Strong Buy</span> / <span class="pill hold" style="padding:1px 7px;">Hold</span> analyst consensus</span>
+    <span class="k"><b>Upside</b> = avg analyst target vs. current price</span>
+    <span class="k"><span class="em">&mdash;</span> not covered (ETFs &amp; crypto have no equity analyst ratings)</span>
+  </div>
+  <div class="footnote" id="footnote"></div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- Baked data snapshot. price/prevClose/peTTM/mktCap/hi52/lo52 from Robinhood
+  //      (intraday, 2026-07-09). fwdPE/target/rating/analysts from
+  //      stockanalysis.com (2026-07-09). No live network calls are made. ----
+  var GENERATED = "2026-07-09T17:20:00Z";
+  var PRICE_ASOF = "Jul 9, 2026 &middot; 1:17pm ET (intraday)";
+  var ANALYST_ASOF = "Jul 9, 2026";
+
+  var DATA = [
+    ["CRDO","Credo Technology","stock",275.43,258.69,103.10,51.36e9,308.67,86.49,45.13,269.81,"Strong Buy",19],
+    ["NFLX","Netflix","stock",74.46,75.59,24.43,313.56e9,128.96,70.86,22.75,113.15,"Buy",50],
+    ["META","Meta Platforms","stock",612.77,603.12,21.93,1555.46e9,796.25,520.26,18.37,827.91,"Strong Buy",63],
+    ["MU","Micron Technology","stock",1024.05,948.80,21.48,1156.73e9,1255.00,103.38,6.61,1486.00,"Strong Buy",45],
+    ["NBIS","Nebius Group","stock",218.81,216.48,63.83,55.06e9,299.86,43.89,null,244.21,"Buy",16],
+    ["ORCL","Oracle","stock",146.09,140.49,24.10,420.81e9,345.72,134.57,17.46,251.85,"Buy",43],
+    ["SOFI","SoFi Technologies","stock",18.30,17.73,40.21,23.47e9,32.73,14.92,27.90,20.90,"Hold",24],
+    ["HOOD","Robinhood Markets","stock",116.63,113.53,54.91,105.16e9,153.86,63.52,56.69,112.05,"Buy",28],
+    ["GOOGL","Alphabet","stock",355.38,361.92,27.61,4315.75e9,408.61,172.77,28.83,432.29,"Strong Buy",64],
+    ["AVGO","Broadcom","stock",404.60,388.69,64.71,1924.92e9,495.00,269.58,24.68,523.73,"Strong Buy",48],
+    ["MSFT","Microsoft","stock",380.12,383.34,22.83,2823.66e9,555.45,349.20,20.70,559.93,"Strong Buy",56],
+    ["AMZN","Amazon.com","stock",243.35,243.62,29.11,2617.74e9,278.56,196.00,29.15,312.91,"Strong Buy",66],
+    ["NOW","ServiceNow","stock",107.85,107.78,64.11,111.22e9,210.20,81.24,24.86,140.73,"Strong Buy",48],
+    ["IREN","IREN Ltd","stock",42.85,43.01,148.09,15.31e9,76.87,14.72,null,80.93,"Buy",16],
+    ["PENG","Penguin Solutions","stock",87.17,78.47,56050.00,4.42e9,89.86,16.04,27.42,74.29,"Buy",7],
+    ["DELL","Dell Technologies","stock",453.29,431.97,34.33,293.86e9,469.47,110.22,23.31,487.26,"Buy",27],
+    ["MSTR","Strategy (MicroStrategy)","stock",94.76,93.87,-2.34,33.19e9,457.22,81.81,2.68,303.64,"Strong Buy",15],
+    ["NVDA","NVIDIA","stock",203.01,204.12,31.26,4992.72e9,236.54,161.16,20.54,301.62,"Strong Buy",61],
+    ["CRWV","CoreWeave","stock",92.06,90.00,-28.60,50.22e9,156.47,63.80,null,142.29,"Buy",37],
+    ["CRM","Salesforce","stock",162.87,166.58,19.28,133.39e9,275.56,146.32,11.96,245.60,"Buy",51],
+    ["ADBE","Adobe","stock",221.03,220.94,12.64,87.86e9,384.75,190.12,8.52,280.66,"Hold",39],
+    ["APH","Amphenol","stock",163.37,158.22,45.47,200.98e9,178.52,95.19,31.59,184.67,"Buy",18],
+    ["TSM","Taiwan Semiconductor","stock",442.46,436.98,36.32,2294.76e9,479.00,223.70,22.30,490.34,"Strong Buy",19],
+    ["BMBL","Bumble","stock",3.09,3.00,-0.53,0.40e9,8.64,2.54,3.43,4.34,"Hold",15],
+    ["VYX","NCR Voyix","stock",8.06,7.99,20.70,1.11e9,14.67,6.02,8.74,12.86,"Buy",7],
+    ["APP","AppLovin","stock",517.80,522.18,46.06,173.95e9,745.61,332.32,30.04,654.47,"Strong Buy",32],
+    ["LRCX","Lam Research","stock",357.59,333.15,62.88,447.19e9,438.50,90.94,44.07,355.84,"Strong Buy",35],
+    ["PYPL","PayPal Holdings","stock",45.06,44.53,8.35,39.74e9,79.50,38.46,8.20,51.17,"Hold",44],
+    ["ASML","ASML Holding","stock",1827.47,1768.65,58.92,704.34e9,1999.96,683.48,46.26,1830.83,"Strong Buy",43],
+    ["UBER","Uber Technologies","stock",74.11,73.60,18.34,150.86e9,101.99,67.19,19.87,104.55,"Strong Buy",52],
+    ["GLW","Corning","stock",197.43,184.03,88.33,169.98e9,271.78,51.32,58.79,212.07,"Buy",16],
+    ["INTU","Intuit","stock",271.99,270.90,16.48,74.40e9,813.70,252.84,10.16,486.61,"Buy",34],
+    ["PLTR","Palantir Technologies","stock",127.66,132.22,148.96,306.02e9,207.52,106.37,83.21,183.12,"Buy",32],
+    ["SPMO","Invesco S&P 500 Momentum ETF","etf",154.41,150.57,36.35,22.00e9,162.30,107.24,null,null,null,null],
+    ["EWY","iShares MSCI South Korea ETF","etf",184.40,182.72,19.56,21.87e9,220.89,70.36,null,null,null,null],
+    ["QQQM","Invesco Nasdaq-100 ETF","etf",297.91,292.87,38.06,100.19e9,308.21,227.00,null,null,null,null],
+    ["DRAM","Roundhill Memory Chip ETF","etf",65.50,62.04,34.04,25.18e9,81.34,26.14,null,null,null,null],
+    ["BTC","Bitcoin","crypto",62303,null,null,null,null,null,null,null,null,null]
+  ];
+
+  var KEYS = ["sym","name","type","price","prev","pe","mcap","hi","lo","fwdpe","target","rating","analysts"];
+  var rows = DATA.map(function (r) {
+    var o = {}; KEYS.forEach(function (k, i) { o[k] = r[i]; });
+    o.day = (o.prev != null && o.price != null && o.prev !== 0) ? ((o.price - o.prev) / o.prev) * 100 : null;
+    o.upside = (o.target != null && o.price != null && o.price !== 0) ? ((o.target - o.price) / o.price) * 100 : null;
+    o.range = (o.hi != null && o.lo != null && o.hi !== o.lo && o.price != null)
+      ? Math.max(0, Math.min(100, ((o.price - o.lo) / (o.hi - o.lo)) * 100)) : null;
+    // scrub non-meaningful trailing P/E (negative earnings or absurd)
+    if (o.pe != null && (o.pe <= 0 || o.pe > 1000)) o.pe = null;
+    o.ratingScore = ({ "Strong Buy": 5, "Buy": 4, "Hold": 3, "Sell": 2, "Strong Sell": 1 })[o.rating] || 0;
+    return o;
+  });
+
+  // ---- Formatters ----
+  function fmtPrice(v) {
+    if (v == null) return '<span class="na">&mdash;</span>';
+    var d = v >= 1000 ? 0 : 2;
+    return "$" + v.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function fmtNum(v, dp) {
+    if (v == null) return '<span class="na">&mdash;</span>';
+    return v.toFixed(dp == null ? 1 : dp);
+  }
+  function fmtMcap(v) {
+    if (v == null) return '<span class="na">&mdash;</span>';
+    if (v >= 1e12) return "$" + (v / 1e12).toFixed(2) + "T";
+    if (v >= 1e9) return "$" + (v / 1e9).toFixed(v / 1e9 >= 100 ? 0 : 1) + "B";
+    return "$" + (v / 1e6).toFixed(0) + "M";
+  }
+  function fmtPct(v, withSign) {
+    if (v == null) return '<span class="na">&mdash;</span>';
+    var cls = v > 0.0005 ? "pos" : (v < -0.0005 ? "neg" : "flat");
+    var s = (withSign && v > 0 ? "+" : "") + v.toFixed(2) + "%";
+    return '<span class="' + cls + '">' + s + "</span>";
+  }
+  function ratingPill(r, n) {
+    if (!r) return '<span class="na">&mdash;</span>';
+    var cls = r === "Strong Buy" ? "buy1" : r === "Buy" ? "buy2" : r === "Hold" ? "hold" : "sell";
+    return '<span class="rating"><span class="pill ' + cls + '">' + r + '</span>' +
+           (n ? '<span class="cnt">' + n + '</span>' : '') + '</span>';
+  }
+  function rangeBar(pct) {
+    if (pct == null) return '<span class="na">&mdash;</span>';
+    return '<span class="range"><span class="track"><span class="fill" style="width:' + pct.toFixed(0) + '%"></span>' +
+           '<span class="dot" style="left:' + pct.toFixed(0) + '%"></span></span>' +
+           '<span class="pct">' + pct.toFixed(0) + '%</span></span>';
+  }
+
+  // ---- Columns ----
+  var COLS = [
+    { id: "sym", label: "Ticker", num: false },
+    { id: "price", label: "Price", num: true, render: function (r) { return fmtPrice(r.price); } },
+    { id: "day", label: "Day", num: true, render: function (r) {
+        if (r.day == null) return '<span class="na">&mdash;</span>';
+        var arrow = r.day > 0.0005 ? "&#9650;" : r.day < -0.0005 ? "&#9660;" : "&middot;";
+        var cls = r.day > 0.0005 ? "pos" : r.day < -0.0005 ? "neg" : "flat";
+        return '<span class="change ' + cls + '">' + arrow + " " + (r.day > 0 ? "+" : "") + r.day.toFixed(2) + "%</span>";
+      } },
+    { id: "mcap", label: "Mkt Cap", num: true, render: function (r) { return fmtMcap(r.mcap); } },
+    { id: "pe", label: "P/E", num: true, render: function (r) { return fmtNum(r.pe, 1); } },
+    { id: "fwdpe", label: "Fwd P/E", num: true, render: function (r) { return fmtNum(r.fwdpe, 1); } },
+    { id: "target", label: "Avg Target", num: true, render: function (r) { return fmtPrice(r.target); } },
+    { id: "upside", label: "Upside", num: true, render: function (r) { return fmtPct(r.upside, true); } },
+    { id: "rating", label: "Analyst Rating", num: true, sortKey: "ratingScore", render: function (r) { return ratingPill(r.rating, r.analysts); } },
+    { id: "range", label: "52-wk Range", num: true, render: function (r) { return rangeBar(r.range); } }
+  ];
+
+  // ---- State (persisted) ----
+  var LS = "watchlist_state_v1";
+  var state = { sort: "mcap", dir: -1, type: "all", q: "" };
+  try { var s = JSON.parse(localStorage.getItem(LS)); if (s) Object.assign(state, s); } catch (e) {}
+  function save() { try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
+
+  // ---- Render header ----
+  var headrow = document.getElementById("headrow");
+  COLS.forEach(function (c) {
+    var th = document.createElement("th");
+    th.textContent = c.label;
+    th.tabIndex = 0;
+    th.setAttribute("data-col", c.id);
+    var arrow = document.createElement("span");
+    arrow.className = "arrow"; arrow.innerHTML = "&#9660;";
+    th.appendChild(arrow);
+    function toggle() {
+      var key = c.sortKey || c.id;
+      if (state.sort === key) { state.dir *= -1; }
+      else { state.sort = key; state.dir = (c.num || c.sortKey) ? -1 : 1; }
+      save(); render();
+    }
+    th.addEventListener("click", toggle);
+    th.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+    headrow.appendChild(th);
+  });
+
+  var body = document.getElementById("body");
+
+  function sortVal(r) {
+    var v = r[state.sort];
+    return (v == null || (typeof v === "number" && isNaN(v))) ? null : v;
+  }
+
+  function render() {
+    // header active state
+    Array.prototype.forEach.call(headrow.children, function (th) {
+      var c = COLS[Array.prototype.indexOf.call(headrow.children, th)];
+      var key = c.sortKey || c.id;
+      var active = key === state.sort;
+      th.setAttribute("data-active", active ? "true" : "false");
+      th.querySelector(".arrow").innerHTML = state.dir === 1 ? "&#9650;" : "&#9660;";
+    });
+
+    var q = state.q.trim().toLowerCase();
+    var list = rows.filter(function (r) {
+      if (state.type !== "all" && r.type !== state.type) return false;
+      if (q && r.sym.toLowerCase().indexOf(q) === -1 && r.name.toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    });
+
+    list.sort(function (a, b) {
+      var va = sortVal(a), vb = sortVal(b);
+      if (va == null && vb == null) return a.sym.localeCompare(b.sym);
+      if (va == null) return 1;   // nulls always last
+      if (vb == null) return -1;
+      if (typeof va === "string") return va.localeCompare(vb) * state.dir;
+      return (va - vb) * state.dir;
+    });
+
+    body.innerHTML = "";
+    if (!list.length) {
+      var tr = document.createElement("tr");
+      tr.innerHTML = '<td colspan="' + COLS.length + '" class="empty">No names match your filter.</td>';
+      body.appendChild(tr);
+      updateSummary(list); return;
+    }
+
+    var frag = document.createDocumentFragment();
+    list.forEach(function (r) {
+      var tr = document.createElement("tr");
+      var tds = COLS.map(function (c, i) {
+        if (i === 0) {
+          var tag = r.type === "etf" ? '<span class="tag">ETF</span>' : r.type === "crypto" ? '<span class="tag">CRYPTO</span>' : "";
+          return '<td class="tkr"><span class="row"><span class="sym">' + r.sym + tag + '</span>' +
+                 '<span class="nm">' + r.name + '</span></span></td>';
+        }
+        return "<td>" + c.render(r) + "</td>";
+      });
+      tr.innerHTML = tds.join("");
+      frag.appendChild(tr);
+    });
+    body.appendChild(frag);
+    updateSummary(list);
+  }
+
+  function updateSummary(list) {
+    var stocks = rows.filter(function (r) { return r.type === "stock"; });
+    var ups = stocks.filter(function (r) { return r.upside != null; });
+    var avgUp = ups.reduce(function (a, r) { return a + r.upside; }, 0) / (ups.length || 1);
+    var strongBuys = stocks.filter(function (r) { return r.rating === "Strong Buy"; }).length;
+    var top = ups.slice().sort(function (a, b) { return b.upside - a.upside; })[0];
+    var chips = [
+      { k: "Names", v: rows.length, cls: "" },
+      { k: "Avg Upside", v: (avgUp >= 0 ? "+" : "") + avgUp.toFixed(1) + "%", cls: avgUp >= 0 ? "pos" : "neg" },
+      { k: "Strong Buys", v: strongBuys + "/" + stocks.length, cls: "" },
+      { k: "Top Upside", v: top ? top.sym + " +" + top.upside.toFixed(0) + "%" : "&mdash;", cls: "pos" }
+    ];
+    document.getElementById("summary").innerHTML = chips.map(function (c) {
+      return '<div class="chip"><span class="k">' + c.k + '</span><span class="v ' + c.cls + '">' + c.v + "</span></div>";
+    }).join("");
+  }
+
+  // ---- Wire toolbar ----
+  var search = document.getElementById("search");
+  search.value = state.q;
+  search.addEventListener("input", function () { state.q = search.value; save(); render(); });
+
+  var tf = document.getElementById("typefilter");
+  Array.prototype.forEach.call(tf.querySelectorAll("button"), function (btn) {
+    btn.setAttribute("aria-pressed", btn.getAttribute("data-type") === state.type ? "true" : "false");
+    btn.addEventListener("click", function () {
+      state.type = btn.getAttribute("data-type"); save();
+      Array.prototype.forEach.call(tf.querySelectorAll("button"), function (b) {
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+      render();
+    });
+  });
+
+  // ---- Header meta ----
+  document.getElementById("asof").innerHTML =
+    "Prices as of <b>" + PRICE_ASOF + "</b><br>Analyst data as of <b>" + ANALYST_ASOF + "</b>";
+  document.getElementById("footnote").innerHTML =
+    "Price, day change, trailing P/E, market cap &amp; 52-week range from Robinhood. " +
+    "Average analyst target, consensus rating &amp; forward P/E from " +
+    '<a href="https://stockanalysis.com" target="_blank" rel="noopener">stockanalysis.com</a>. ' +
+    "Trailing P/E hidden for companies with negative or non-meaningful earnings. " +
+    "This snapshot has no live feed &mdash; it refreshes when regenerated. Not investment advice.";
+
+  render();
+})();
+</script>
