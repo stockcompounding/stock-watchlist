@@ -241,51 +241,51 @@
   "use strict";
 
   // ---- Baked data snapshot. price/prevClose/peTTM/mktCap/hi52/lo52 from Robinhood
-  //      (intraday, 2026-07-09). fwdPE/target/rating/analysts from
-  //      stockanalysis.com (2026-07-09). No live network calls are made. ----
-  var GENERATED = "2026-07-10T18:05:00Z";
-  var PRICE_ASOF = "Jul 10, 2026 &middot; 2:02pm ET (intraday)";
-  var ANALYST_ASOF = "Jul 10, 2026";
+  //      (intraday, 2026-07-13). fwdPE/target/rating/analysts from
+  //      stockanalysis.com (2026-07-13). No live network calls are made. ----
+  var GENERATED = "2026-07-13T17:10:00Z";
+  var PRICE_ASOF = "Jul 13, 2026 &middot; 1:01pm ET (intraday)";
+  var ANALYST_ASOF = "Jul 13, 2026";
 
   var DATA = [
-    ["CRDO","Credo Technology","stock",261.88,265.65,105.88,48.87e9,308.67,86.49,42.78,269.81,"Strong Buy",19],
-    ["NFLX","Netflix","stock",73.03,75.47,24.39,307.39e9,128.96,70.86,22.71,113.15,"Buy",50],
-    ["META","Meta Platforms","stock",666.12,631.48,22.96,1690.85e9,796.25,520.26,19.31,827.48,"Strong Buy",63],
-    ["MU","Micron Technology","stock",992.08,991.64,22.45,1120.31e9,1255.00,103.38,6.91,1486.00,"Strong Buy",45],
-    ["NBIS","Nebius Group","stock",223.31,216.20,63.74,56.22e9,299.86,43.89,null,244.21,"Buy",16],
-    ["ORCL","Oracle","stock",141.35,143.72,24.74,407.15e9,345.72,134.57,17.93,251.85,"Buy",43],
-    ["SOFI","SoFi Technologies","stock",18.80,18.62,42.23,24.12e9,32.73,14.92,28.69,21.10,"Hold",24],
-    ["HOOD","Robinhood Markets","stock",112.82,115.11,55.67,101.68e9,153.86,63.52,54.12,116.09,"Buy",28],
-    ["GOOGL","Alphabet","stock",354.78,358.89,27.38,4309.07e9,408.61,174.38,28.59,432.48,"Strong Buy",64],
-    ["AVGO","Broadcom","stock",400.39,401.11,66.77,1904.89e9,495.00,269.58,25.47,523.73,"Strong Buy",48],
-    ["MSFT","Microsoft","stock",383.59,384.36,22.89,2849.47e9,555.45,349.20,20.75,559.86,"Strong Buy",56],
-    ["AMZN","Amazon.com","stock",244.84,247.04,29.52,2633.77e9,278.56,196.00,29.55,312.91,"Strong Buy",66],
-    ["NOW","ServiceNow","stock",107.10,108.84,64.74,110.45e9,210.20,81.24,25.10,140.73,"Strong Buy",48],
-    ["IREN","IREN Ltd","stock",42.05,41.72,143.66,15.03e9,76.87,14.72,null,80.93,"Buy",16],
-    ["PENG","Penguin Solutions","stock",79.49,81.39,58135.71,4.07e9,89.86,16.04,25.16,74.29,"Buy",7],
-    ["DELL","Dell Technologies","stock",443.50,450.22,35.78,287.51e9,469.47,110.22,24.30,487.26,"Buy",27],
-    ["MSTR","Strategy (MicroStrategy)","stock",94.13,93.89,-2.34,32.99e9,457.22,81.81,2.68,303.64,"Strong Buy",15],
-    ["NVDA","NVIDIA","stock",210.53,202.78,31.05,5179.42e9,236.54,161.61,20.37,301.62,"Strong Buy",61],
-    ["CRWV","CoreWeave","stock",90.07,89.70,-28.50,49.14e9,153.50,63.80,null,142.29,"Buy",37],
-    ["CRM","Salesforce","stock",162.72,162.50,18.81,133.24e9,274.00,146.32,11.67,245.60,"Buy",51],
-    ["ADBE","Adobe","stock",223.11,222.65,12.73,88.69e9,376.16,190.12,8.59,280.66,"Hold",39],
-    ["APH","Amphenol","stock",159.44,162.24,46.62,196.15e9,178.52,95.19,32.39,184.67,"Buy",18],
-    ["TSM","Taiwan Semiconductor","stock",438.41,436.96,36.31,2274.17e9,479.00,223.70,22.30,490.34,"Strong Buy",19],
-    ["BMBL","Bumble","stock",3.08,3.07,-0.55,0.40e9,8.64,2.54,3.51,4.34,"Hold",15],
-    ["VYX","NCR Voyix","stock",8.08,7.99,20.70,1.11e9,14.67,6.02,8.84,12.86,"Buy",7],
-    ["APP","AppLovin","stock",507.72,520.43,45.91,170.56e9,745.61,332.32,29.94,654.47,"Strong Buy",32],
-    ["LRCX","Lam Research","stock",353.24,353.17,66.66,441.91e9,438.50,90.94,46.71,361.00,"Strong Buy",35],
-    ["PYPL","PayPal Holdings","stock",46.01,45.32,8.50,40.58e9,79.50,38.46,8.35,51.38,"Hold",44],
-    ["ASML","ASML Holding","stock",1805.80,1804.25,60.11,696.11e9,1999.96,683.48,45.19,1830.83,"Strong Buy",43],
-    ["UBER","Uber Technologies","stock",74.74,74.35,18.53,152.14e9,101.99,67.19,20.08,104.55,"Strong Buy",52],
-    ["GLW","Corning","stock",191.41,192.38,92.34,164.73e9,271.78,51.32,56.93,212.07,"Buy",16],
-    ["INTU","Intuit","stock",272.76,273.38,16.55,74.61e9,813.70,252.84,10.21,486.61,"Buy",34],
-    ["PLTR","Palantir Technologies","stock",126.39,129.04,145.38,302.83e9,207.52,106.37,81.21,183.12,"Buy",32],
-    ["SPMO","Invesco S&P 500 Momentum ETF","etf",153.98,153.08,36.63,21.98e9,162.30,107.24,null,null,null,null],
-    ["EWY","iShares MSCI South Korea ETF","etf",183.61,184.75,18.94,21.78e9,220.89,70.36,null,null,null,null],
-    ["QQQM","Invesco Nasdaq-100 ETF","etf",298.81,297.78,38.04,100.52e9,308.21,227.00,null,null,null,null],
-    ["DRAM","Roundhill Memory Chip ETF","etf",63.41,64.36,31.77,24.83e9,81.34,26.14,null,null,null,null],
-    ["BTC","Bitcoin","crypto",63868.60,null,null,null,null,null,null,null,null,null]
+    ["CRDO","Credo Technology","stock",238.87,257.79,102.75,44.49e9,308.67,86.49,38.99,269.81,"Strong Buy",19],
+    ["NFLX","Netflix","stock",74.40,73.37,23.71,313.27e9,127.75,70.86,22.09,112.17,"Buy",50],
+    ["META","Meta Platforms","stock",659.08,669.21,24.33,1673.01e9,796.25,520.26,20.47,827.48,"Strong Buy",63],
+    ["MU","Micron Technology","stock",931.13,979.30,22.17,1051.22e9,1255.00,103.38,6.82,1486.00,"Strong Buy",45],
+    ["NBIS","Nebius Group","stock",213.17,219.65,64.76,53.64e9,299.86,43.89,null,244.21,"Buy",16],
+    ["ORCL","Oracle","stock",134.31,140.64,24.13,386.85e9,345.72,133.85,17.48,251.85,"Buy",43],
+    ["SOFI","SoFi Technologies","stock",18.30,18.78,42.59,23.49e9,32.73,14.92,28.03,21.10,"Hold",24],
+    ["HOOD","Robinhood Markets","stock",110.16,111.97,54.15,99.25e9,153.86,63.52,52.52,116.09,"Buy",28],
+    ["GOOGL","Alphabet","stock",355.59,357.18,27.25,4318.54e9,408.61,176.48,28.21,432.48,"Strong Buy",64],
+    ["AVGO","Broadcom","stock",387.40,399.97,66.58,1843.09e9,495.00,269.58,25.40,523.73,"Strong Buy",48],
+    ["MSFT","Microsoft","stock",392.89,385.10,22.94,2917.96e9,555.45,349.20,20.79,559.86,"Strong Buy",56],
+    ["AMZN","Amazon.com","stock",247.67,245.34,29.32,2663.89e9,278.56,196.00,29.34,312.91,"Strong Buy",66],
+    ["NOW","ServiceNow","stock",112.66,107.71,64.07,116.21e9,210.20,81.24,24.84,140.73,"Strong Buy",48],
+    ["IREN","IREN Ltd","stock",38.90,41.14,141.67,13.90e9,76.87,14.72,null,80.93,"Buy",16],
+    ["PENG","Penguin Solutions","stock",77.41,78.35,55964.29,3.96e9,89.86,16.04,24.37,74.29,"Buy",7],
+    ["DELL","Dell Technologies","stock",429.33,434.97,34.57,278.30e9,469.47,110.22,23.45,487.26,"Buy",27],
+    ["MSTR","Strategy (MicroStrategy)","stock",91.84,94.64,-2.36,32.19e9,457.22,81.81,2.70,303.64,"Strong Buy",15],
+    ["NVDA","NVIDIA","stock",204.83,210.96,32.31,5038.71e9,236.54,162.02,21.19,301.62,"Strong Buy",61],
+    ["CRWV","CoreWeave","stock",84.30,88.88,-28.24,45.98e9,153.20,63.80,null,142.29,"Buy",37],
+    ["CRM","Salesforce","stock",172.26,163.32,18.91,141.08e9,274.00,146.32,11.72,245.60,"Buy",51],
+    ["ADBE","Adobe","stock",231.24,223.64,12.79,91.90e9,376.16,190.12,8.62,280.66,"Hold",39],
+    ["APH","Amphenol","stock",155.80,159.06,45.71,191.52e9,178.52,95.19,31.40,185.61,"Buy",18],
+    ["TSM","Taiwan Semiconductor","stock",425.72,434.11,36.08,2206.46e9,479.00,223.70,22.48,490.34,"Strong Buy",19],
+    ["BMBL","Bumble","stock",3.11,3.03,-0.54,0.41e9,8.64,2.54,3.46,4.34,"Hold",15],
+    ["VYX","NCR Voyix","stock",8.23,8.06,20.89,1.13e9,14.67,6.02,9.01,12.86,"Buy",7],
+    ["APP","AppLovin","stock",453.53,506.98,44.72,152.36e9,745.61,332.32,29.17,654.47,"Strong Buy",32],
+    ["LRCX","Lam Research","stock",331.10,350.33,66.12,414.06e9,438.50,90.94,46.26,361.00,"Strong Buy",35],
+    ["PYPL","PayPal Holdings","stock",48.03,46.32,8.69,42.36e9,79.50,38.46,8.54,51.38,"Hold",44],
+    ["ASML","ASML Holding","stock",1740.73,1797.32,59.88,673.76e9,1999.96,683.48,45.30,1874.44,"Strong Buy",44],
+    ["UBER","Uber Technologies","stock",75.28,74.54,18.58,153.26e9,101.99,67.19,20.16,104.51,"Strong Buy",52],
+    ["GLW","Corning","stock",184.44,190.89,91.62,158.64e9,271.78,51.32,54.79,212.07,"Buy",16],
+    ["INTU","Intuit","stock",294.29,274.96,16.65,80.50e9,813.70,252.84,10.27,484.73,"Buy",34],
+    ["PLTR","Palantir Technologies","stock",130.17,126.79,142.85,312.08e9,207.52,106.37,79.80,183.12,"Buy",32],
+    ["SPMO","Invesco S&P 500 Momentum ETF","etf",149.92,153.75,37.41,21.45e9,162.30,107.24,null,null,null,null],
+    ["EWY","iShares MSCI South Korea ETF","etf",168.34,183.52,19.58,19.99e9,220.89,70.36,null,null,null,null],
+    ["QQQM","Invesco Nasdaq-100 ETF","etf",293.90,298.72,38.78,98.97e9,308.21,227.00,null,null,null,null],
+    ["DRAM","Roundhill Memory Chip ETF","etf",57.11,63.04,32.60,22.34e9,81.34,26.14,null,null,null,null],
+    ["BTC","Bitcoin","crypto",63020.04,null,null,null,null,null,null,null,null,null]
   ];
 
   var KEYS = ["sym","name","type","price","prev","pe","mcap","hi","lo","fwdpe","target","rating","analysts"];
